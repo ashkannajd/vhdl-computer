@@ -1,0 +1,32 @@
+name: Commitlint
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches:
+      - main
+      - master
+      - develop
+
+jobs:
+  commitlint:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Checkout the repository
+      - uses: actions/checkout@v4
+        with:
+          # CRITICAL: Fetch all history to ensure commitlint can compare ranges
+          fetch-depth: 0
+
+      # 2. Setup Node.js
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # 3. Install dependencies
+      - run: npm install
+
+      # 4. Run commitlint
+      # This lints all commits between the PR branch and main
+      - run: npx commitlint --from origin/main --to HEAD --verbose
