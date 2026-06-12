@@ -29,4 +29,4 @@ jobs:
 
       # 4. Run commitlint
       # This lints all commits between the PR branch and main
-      - run: npx commitlint --from origin/main --to HEAD --verbose
+      - run: npx commitlint --from origin/master --to HEAD --verbose
