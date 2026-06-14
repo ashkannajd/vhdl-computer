@@ -6,6 +6,7 @@ entity register_16bit is
         clk   : in  STD_LOGIC;
         rst   : in  STD_LOGIC; 
         load  : in  STD_LOGIC;
+        INR   : in  STD_LOGIC;
         d_in  : in  STD_LOGIC_VECTOR(15 downto 0);
         q_out : out STD_LOGIC_VECTOR(15 downto 0)
     );
@@ -20,6 +21,8 @@ begin
                 q_out <= (others => '0');
             elsif load = '1' then
                 q_out <= d_in;
+            elsif INR = '1' then
+                q_out <= std_logic_vector(unsigned(q_out) + 1);
             end if;
         end if;
     end process;
