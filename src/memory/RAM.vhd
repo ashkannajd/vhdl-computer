@@ -2,7 +2,7 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
-entity memory_unit is
+entity RAM is
     generic (
         ADDR_WIDTH : integer := 8;  
         DATA_WIDTH : integer := 16  
@@ -14,9 +14,9 @@ entity memory_unit is
         data_in  : in  STD_LOGIC_VECTOR(DATA_WIDTH-1 downto 0);
         data_out : out STD_LOGIC_VECTOR(DATA_WIDTH-1 downto 0)
     );
-end memory_unit;
+end RAM;
 
-architecture Behavioral of memory_unit is
+architecture Behavioral of RAM is
     type ram_type is array (0 to (2**ADDR_WIDTH)-1) of STD_LOGIC_VECTOR(DATA_WIDTH-1 downto 0);
     signal ram : ram_type := (others => (others => '0'));
 begin
