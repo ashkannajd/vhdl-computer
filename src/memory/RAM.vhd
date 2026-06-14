@@ -4,7 +4,7 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity RAM is
     generic (
-        ADDR_WIDTH : integer := 8;  
+        ADDR_WIDTH : integer := 12;  
         DATA_WIDTH : integer := 16  
     );
     Port (
