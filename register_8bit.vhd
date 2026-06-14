@@ -1,6 +1,6 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.NUMAERIC_STD.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
 entity register_8bit is
     Port ( clk    : in  STD_LOGIC;
