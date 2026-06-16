@@ -107,6 +107,16 @@ architecture rtl of computer is
   constant ion  : std_logic_vector(15 downto 0) := x"F080";
   constant iof  : std_logic_vector(15 downto 0) := x"F040";
 
+  -- ================================================================
+  -- COMPONENT PORTS
+  -- ================================================================
+  -- 3-to-8 decoder
+  signal d : std_logic_vector(7 downto 0);
+  -- 4-to-16 decoder
+  signal t : std_logic_vector(15 downto 0);
+  -- clock
+  signal clk : std_logic;
+
 begin
 
 end architecture rtl;
