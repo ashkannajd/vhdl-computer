@@ -39,7 +39,7 @@ architecture rtl of computer is
   signal outr : std_logic_vector(iowidth - 1 downto 0);
   -- input register
   signal inpr : std_logic_vector(iowidth - 1 downto 0);
-  -- sequence counter
+  -- step counter
   signal sc : std_logic_vector(3 downto 0);
 
   -- ================================================================
@@ -58,6 +58,15 @@ architecture rtl of computer is
   signal e : std_logic;
   -- INSTRUCTION
   signal i : std_logic;
+
+  -- ================================================================
+  -- MEMORY
+  -- ================================================================
+
+  type mem_type is array (0 to (2 ** addresswidth) - 1)
+    of std_logic_vector(wordwidth - 1 downto 0);
+
+  signal mem : mem_type;
 
 begin
 
