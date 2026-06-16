@@ -119,4 +119,20 @@ architecture rtl of computer is
 
 begin
 
+  -- ================================================================
+  -- COMPONENT INSTANTIATION
+  -- ================================================================
+  u_dec3x8 : entity work.dec3x8(behavioral)
+    port map (
+      in_vector  => ir(14 downto 12),
+      out_vector => d(7 downto 0)
+    );
+
+  u_dec4x16 : entity work.dec4x16(behavioral)
+    port map (
+      in_vector  => sc(3 downto 0),
+      out_vector => t(15 downto 0)
+    );
+  end process computer_process;
+
 end architecture rtl;
