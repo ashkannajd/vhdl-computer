@@ -133,6 +133,23 @@ begin
       in_vector  => sc(3 downto 0),
       out_vector => t(15 downto 0)
     );
+
+  -- ================================================================
+  -- CLOCK GENERATION
+  -- ================================================================
+  clk_process : process is
+  begin
+
+    while true loop
+
+      clk <= '0';
+      wait for clk_period / 2;
+      clk <= '1';
+      wait for clk_period / 2;
+
+    end loop;
+
+  end process clk_process;
   end process computer_process;
 
 end architecture rtl;
