@@ -12,7 +12,7 @@ entity computer is
   port (
     start    : in    std_logic;
     keyboard : in    std_logic_vector(7 downto 0);
-    printer  : in    std_logic_vector(7 downto 0);
+    printer  : out   std_logic_vector(7 downto 0);
     wrt      : out   std_logic
   );
 end entity computer;
