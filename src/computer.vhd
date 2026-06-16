@@ -150,6 +150,34 @@ begin
     end loop;
 
   end process clk_process;
+
+  initialization_process : process is
+  begin
+
+    -- memory
+    mem <= (others => (others => '0'));
+
+    -- registers
+    pc   <= (others => '0');
+    ar   <= (others => '0');
+    ir   <= (others => '0');
+    dr   <= (others => '0');
+    ac   <= (others => '0');
+    tr   <= (others => '0');
+    outr <= (others => '0');
+    inpr <= (others => '0');
+    sc   <= (others => '0');
+
+    -- flip flops
+    fgi <= '0';
+    fgo <= '0';
+    ien <= '0';
+    r   <= '0';
+    s   <= '0';
+    e   <= '0';
+    i   <= '0';
+
+  end process initialization_process;
   end process computer_process;
 
 end architecture rtl;
