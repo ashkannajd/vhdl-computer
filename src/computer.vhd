@@ -68,6 +68,45 @@ architecture rtl of computer is
 
   signal mem : mem_type;
 
+  -- ================================================================
+  -- CONSTANTS
+  -- ================================================================
+
+  -- ++++++++++++++++++++++++++++++++
+  -- INSTRUCTIONS
+  -- ++++++++++++++++++++++++++++++++
+
+  -- MEMORY REFERENCE INSTRUCTIONS OP-CODE
+  constant and_op : std_logic_vector(2 downto 0) := "000";
+  constant add_op : std_logic_vector(2 downto 0) := "001";
+  constant lda_op : std_logic_vector(2 downto 0) := "010";
+  constant sta_op : std_logic_vector(2 downto 0) := "011";
+  constant bun_op : std_logic_vector(2 downto 0) := "100";
+  constant bsa_op : std_logic_vector(2 downto 0) := "101";
+  constant isz_op : std_logic_vector(2 downto 0) := "110";
+
+  -- REGISTER REFERENCE INSTRUCTIONS
+  constant cla : std_logic_vector(15 downto 0) := x"7800";
+  constant cle : std_logic_vector(15 downto 0) := x"7400";
+  constant cma : std_logic_vector(15 downto 0) := x"7200";
+  constant cme : std_logic_vector(15 downto 0) := x"7100";
+  constant cir : std_logic_vector(15 downto 0) := x"7080";
+  constant cil : std_logic_vector(15 downto 0) := x"7040";
+  constant inc : std_logic_vector(15 downto 0) := x"7020";
+  constant spa : std_logic_vector(15 downto 0) := x"7010";
+  constant sna : std_logic_vector(15 downto 0) := x"7008";
+  constant sza : std_logic_vector(15 downto 0) := x"7004";
+  constant sze : std_logic_vector(15 downto 0) := x"7002";
+  constant hlt : std_logic_vector(15 downto 0) := x"7001";
+
+  -- INPUT-OUTPUT INSTRUCTIONS
+  constant inp  : std_logic_vector(15 downto 0) := x"F800";
+  constant outt : std_logic_vector(15 downto 0) := x"F400";
+  constant ski  : std_logic_vector(15 downto 0) := x"F200";
+  constant sko  : std_logic_vector(15 downto 0) := x"F100";
+  constant ion  : std_logic_vector(15 downto 0) := x"F080";
+  constant iof  : std_logic_vector(15 downto 0) := x"F040";
+
 begin
 
 end architecture rtl;
