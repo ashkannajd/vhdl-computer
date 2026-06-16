@@ -300,6 +300,33 @@ begin
       if (not d(7) and not i and t(3)) then
       -- do nothing
       end if;
+
+      -- T4
+      -- ################################################################
+      if (d(0) and t(4)) then
+        dr <= mem(ar);
+      end if;
+      if (d(1) and t(4)) then
+        dr <= mem(ar);
+      end if;
+      if (d(2) and t(4)) then
+        dr <= mem(ar);
+      end if;
+      if (d(3) and t(4)) then
+        sc      <= (others => '0');
+        mem(ar) <= ac;
+      end if;
+      if (d(4) and t(4)) then
+        sc <= (others => '0');
+        pc <= ar;
+      end if;
+      if (d(5) and t(4)) then
+        mem(ar) <= pc;
+        ar      <= std_logic_vector(unsigned(ar) + 1);
+      end if;
+      if (d(6) and t(4)) then
+        dr <= mem (ar);
+      end if;
     end if;
 
   end process computer_process;
