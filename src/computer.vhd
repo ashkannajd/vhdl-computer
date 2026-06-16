@@ -153,6 +153,8 @@ begin
 
   end process clk_process;
 
+  inpr <= keyboard;
+
   initialization_process : process is
   begin
 
@@ -170,7 +172,6 @@ begin
     ac   <= (others => '0');
     tr   <= (others => '0');
     outr <= (others => '0');
-    inpr <= (others => '0');
     sc   <= (others => '0');
 
     -- flip flops
@@ -210,7 +211,8 @@ begin
       -- START / RUN CONTROL
       -- ##################################################################
 
-		sc_clear <= '0';
+      sc_clear <= '0';
+      wrt      <= '0';
       if (start = '1' and s = '0') then
         s <= '1';
       elsif (s = '1') then
@@ -269,9 +271,9 @@ begin
         end if;
 
         if (r = '1' and t(2) = '1') then
-          pc  <= std_logic_vector(unsigned(pc) + 1);
-          ien <= '0';
-          r   <= '0';
+          pc       <= std_logic_vector(unsigned(pc) + 1);
+          ien      <= '0';
+          r        <= '0';
           sc_clear <= '1';
         end if;
 
@@ -289,7 +291,7 @@ begin
         end if;
 
         if (d(0) = '1' and t(5) = '1') then
-          ac <= ac and dr;
+          ac       <= ac and dr;
           sc_clear <= '1';
         end if;
 
@@ -303,9 +305,9 @@ begin
         end if;
 
         if (d(1) = '1' and t(5) = '1') then
-          result := ('0' & unsigned(ac)) + ('0' & unsigned(dr));
-          e      <= result(result'high);
-          ac     <= std_logic_vector(result(ac'range));
+          result   := ('0' & unsigned(ac)) + ('0' & unsigned(dr));
+          e        <= result(result'high);
+          ac       <= std_logic_vector(result(ac'range));
           sc_clear <= '1';
         end if;
 
@@ -319,7 +321,7 @@ begin
         end if;
 
         if (d(2) = '1' and t(5) = '1') then
-          ac <= dr;
+          ac       <= dr;
           sc_clear <= '1';
         end if;
 
@@ -329,7 +331,7 @@ begin
         -- ################################################################
         if (d(3) = '1' and t(4) = '1') then
           mem(to_integer(unsigned(ar))) <= ac;
-          sc_clear <= '1';
+          sc_clear                      <= '1';
         end if;
 
         -- ################################################################
@@ -337,7 +339,7 @@ begin
         -- D4T4: PC <- AR, SC <- 0
         -- ################################################################
         if (d(4) = '1' and t(4) = '1') then
-          pc <= ar;
+          pc       <= ar;
           sc_clear <= '1';
         end if;
 
@@ -358,7 +360,7 @@ begin
         end if;
 
         if (d(5) = '1' and t(5) = '1') then
-          pc <= ar;
+          pc       <= ar;
           sc_clear <= '1';
         end if;
 
@@ -519,6 +521,7 @@ begin
           if (ir(10) = '1') then
             outr <= ac(7 downto 0);
             fgo  <= '0';
+            wrt  <= '1';
           end if;
 
           -- ##############################################################
