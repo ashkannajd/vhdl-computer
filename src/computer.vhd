@@ -178,6 +178,58 @@ begin
     i   <= '0';
 
   end process initialization_process;
+
+  computer_process : process (clk) is
+  begin
+
+    if (rising_edge(clk) and start and not s) then
+      -- set the start flipflop s to 1
+      s <= '1';
+    elsif rising_edge(clk) then
+      -- T0
+      -- ################################################################
+      if (not r and t(0)) then
+        ar <= pc;
+      end if;
+      if (r and t(0)) then
+        ar <= (others => '0');
+        tr <= (tr'high downto addresswidth => '0') & pc(addresswidth - 1 downto 0);
+      end if;
+
+      -- T1
+      -- ################################################################
+      if (not r and t(1)) then
+        ir <= mem(ar(addresswidth - 1 downto 0));
+        pc <= std_logic_vector(unsigned(pc) + 1);
+      end if;
+      if (r and t(1)) then
+        mem(ar) <= tr;
+        pc      <= (others => '0');
+      end if;
+
+      -- T2
+      -- ################################################################
+      if (not r and t(2)) then
+        i  <= ir(wordwidth - 1);
+        ar <= ir(addresswidth - 1 downto 0);
+      end if;
+      if (r and t(2)) then
+        pc  <= std_logic_vector(unsigned(pc) + 1);
+        ien <= '0';
+        r   <= '0';
+        sc  <= '0';
+      end if;
+
+      -- T3
+      -- ################################################################
+    -- D7I'T3
+    ----------------------------------
+    -- D7'IT3
+    ----------------------------------
+    -- D7'I'T3
+    ----------------------------------
+    end if;
+
   end process computer_process;
 
 end architecture rtl;
