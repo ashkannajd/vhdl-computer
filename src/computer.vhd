@@ -348,8 +348,16 @@ begin
         pc <= ar;
         sc <= (others => '0');
       end if;
-      if (d(5) and t(5)) then
+      if (d(6) and t(5)) then
         dr <= std_logic_vector(unsigned(dr) + 1);
+      end if;
+
+      -- T6
+      -- ################################################################
+      if (d(6) and t(7)) then
+        mem(ar) <= dr;
+        pc      <= std_logic_vector(unsigned(pc) + 1) when dr = (others => '0');
+        sc      <= (others => '0');
       end if;
     end if;
 
