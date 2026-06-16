@@ -40,7 +40,7 @@ architecture rtl of computer is
   -- input register
   signal inpr : std_logic_vector(iowidth - 1 downto 0);
   -- sequence counter
-  signal sc : std_logic_vector(2 downto 0);
+  signal sc : std_logic_vector(3 downto 0);
 
   -- ================================================================
   -- FLIP FLOPS
