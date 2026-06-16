@@ -110,6 +110,8 @@ architecture rtl of computer is
   -- ================================================================
   -- COMPONENT PORTS
   -- ================================================================
+  -- sequence counter
+  signal sc_clear : std_logic;
   -- 3-to-8 decoder
   signal d : std_logic_vector(7 downto 0);
   -- 4-to-16 decoder
@@ -154,6 +156,9 @@ begin
   initialization_process : process is
   begin
 
+    -- sequence counter
+    sc_clear <= '0';
+
     -- memory
     mem <= (others => (others => '0'));
 
@@ -179,6 +184,19 @@ begin
 
   end process initialization_process;
 
+  sc_process : process (clk) is
+  begin
+
+    if rising_edge(clk) then
+      if (sc_clear = '1') then
+        sc <= (others => '0');
+      else
+        sc <= std_logic_vector(unsigned(sc) + 1);
+      end if;
+    end if;
+
+  end process sc_process;
+
   computer_process : process (clk) is
 
     variable result : unsigned(ac'length downto 0);
@@ -191,6 +209,8 @@ begin
       -- ##################################################################
       -- START / RUN CONTROL
       -- ##################################################################
+
+		sc_clear <= '0';
       if (start = '1' and s = '0') then
         s <= '1';
       elsif (s = '1') then
@@ -252,7 +272,7 @@ begin
           pc  <= std_logic_vector(unsigned(pc) + 1);
           ien <= '0';
           r   <= '0';
-          sc  <= (others => '0');
+          sc_clear <= '1';
         end if;
 
         -- ################################################################
@@ -270,7 +290,7 @@ begin
 
         if (d(0) = '1' and t(5) = '1') then
           ac <= ac and dr;
-          sc <= (others => '0');
+          sc_clear <= '1';
         end if;
 
         -- ################################################################
@@ -286,7 +306,7 @@ begin
           result := ('0' & unsigned(ac)) + ('0' & unsigned(dr));
           e      <= result(result'high);
           ac     <= std_logic_vector(result(ac'range));
-          sc     <= (others => '0');
+          sc_clear <= '1';
         end if;
 
         -- ################################################################
@@ -300,7 +320,7 @@ begin
 
         if (d(2) = '1' and t(5) = '1') then
           ac <= dr;
-          sc <= (others => '0');
+          sc_clear <= '1';
         end if;
 
         -- ################################################################
@@ -309,7 +329,7 @@ begin
         -- ################################################################
         if (d(3) = '1' and t(4) = '1') then
           mem(to_integer(unsigned(ar))) <= ac;
-          sc                            <= (others => '0');
+          sc_clear <= '1';
         end if;
 
         -- ################################################################
@@ -318,7 +338,7 @@ begin
         -- ################################################################
         if (d(4) = '1' and t(4) = '1') then
           pc <= ar;
-          sc <= (others => '0');
+          sc_clear <= '1';
         end if;
 
         -- ################################################################
@@ -339,7 +359,7 @@ begin
 
         if (d(5) = '1' and t(5) = '1') then
           pc <= ar;
-          sc <= (others => '0');
+          sc_clear <= '1';
         end if;
 
         -- ################################################################
@@ -363,7 +383,7 @@ begin
             pc <= std_logic_vector(unsigned(pc) + 1);
           end if;
 
-          sc <= (others => '0');
+          sc_clear <= '1';
         end if;
 
         -- ################################################################
@@ -371,7 +391,7 @@ begin
         -- D7 I' T3
         -- ################################################################
         if (d(7) = '1' and i = '0' and t(3) = '1') then
-          sc <= (others => '0');
+          sc_clear <= '1';
 
           -- ##############################################################
           -- CLA: AC <- 0
@@ -483,7 +503,7 @@ begin
         -- D7 I T3
         -- ################################################################
         if (d(7) = '1' and i = '1' and t(3) = '1') then
-          sc <= (others => '0');
+          sc_clear <= '1';
 
           -- ##############################################################
           -- INP: AC(7 downto 0) <- INPR, FGI <- 0
