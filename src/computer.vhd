@@ -222,12 +222,84 @@ begin
 
       -- T3
       -- ################################################################
-    -- D7I'T3
-    ----------------------------------
-    -- D7'IT3
-    ----------------------------------
-    -- D7'I'T3
-    ----------------------------------
+      -- D7IT3
+      ----------------------------------
+      if (d(7) and i and t(3)) then
+        sc <= '0';
+      end if;
+      if (d(7) and i and t(3) and ir(11)) then
+        fgi            <= '0';
+        ac(7 downto 0) <= inpr;
+      end if;
+      if (d(7) and i and t(3) and ir(10)) then
+        fgo  <= '0';
+        inpr <= ac(7 downto 0);
+      end if;
+      if (d(7) and i and t(3) and ir(9)) then
+        pc <= std_logic_vector(unsigned(pc) + 1) when fgi;
+      end if;
+      if (d(7) and i and t(3) and ir(8)) then
+        pc <= std_logic_vector(unsigned(pc) + 1) when fgo;
+      end if;
+      if (d(7) and i and t(3) and ir(7)) then
+        ien <= '1';
+      end if;
+      if (d(7) and i and t(3) and ir(6)) then
+        ien <= '0';
+      end if;
+      -- D7I'T3
+      ----------------------------------
+      if (d(7) and i and t(3)) then
+        sc <= (others => '0');
+      end if;
+      if (d(7) and i and t(3) and ir(11)) then
+        ac <= (others => '0');
+      end if;
+      if (d(7) and i and t(3) and ir(10)) then
+        e <= '0';
+      end if;
+      if (d(7) and i and t(3) and ir(9)) then
+        ac <= not ac;
+      end if;
+      if (d(7) and i and t(3) and ir(8)) then
+        e <= not e;
+      end if;
+      if (d(7) and i and t(3) and ir(7)) then
+        e  <= ac(0);
+        ac <= e & ac(ac'high downto 1);
+      end if;
+      if (d(7) and i and t(3) and ir(6)) then
+        e  <= ac(ac'high);
+        ac <= ac(ac'high - 1 downto 0) & e;
+      end if;
+      if (d(7) and i and t(3) and ir(5)) then
+        ac <= std_logic_vector(unsigned(ac) + 1);
+      end if;
+      if (d(7) and i and t(3) and ir(4)) then
+        pc <= std_logic_vector(unsigned(pc) + 1) when not ac(ac'high);
+      end if;
+      if (d(7) and i and t(3) and ir(3)) then
+        pc <= std_logic_vector(unsigned(pc) + 1) when ac(ac'high);
+      end if;
+      if (d(7) and i and t(3) and ir(2)) then
+        pc <= std_logic_vector(unsigned(pc) + 1) when ac = (others => '0');
+      end if;
+      if (d(7) and i and t(3) and ir(1)) then
+        pc <= std_logic_vector(unsigned(pc) + 1) when not e;
+      end if;
+      if (d(7) and i and t(3) and ir(0)) then
+        s <= '0';
+      end if;
+      -- D7'IT3
+      ----------------------------------
+      if (not d(7) and i and t(3)) then
+        ar <= mem(ar);
+      end if;
+      -- D7'I'T3
+      ----------------------------------
+      if (not d(7) and not i and t(3)) then
+      -- do nothing
+      end if;
     end if;
 
   end process computer_process;
