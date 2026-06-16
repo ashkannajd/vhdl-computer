@@ -327,6 +327,30 @@ begin
       if (d(6) and t(4)) then
         dr <= mem (ar);
       end if;
+
+      -- T5
+      -- ################################################################
+      if (d(0) and t(5)) then
+        ac <= ac and dr;
+        sc <= (others => '0');
+      end if;
+      if (d(1) and t(5)) then
+        result := ('0' & unsigned(ac) + '0' & unsigned(dr));
+        e      <= result(result'high);
+        ac     <= restult(result'high - 1 downto 0);
+        sc     <= (others => '0');
+      end if;
+      if (d(2) and t(5)) then
+        ac <= dr;
+        sc <= (others => '0');
+      end if;
+      if (d(5) and t(5)) then
+        pc <= ar;
+        sc <= (others => '0');
+      end if;
+      if (d(5) and t(5)) then
+        dr <= std_logic_vector(unsigned(dr) + 1);
+      end if;
     end if;
 
   end process computer_process;
